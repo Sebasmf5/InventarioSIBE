@@ -1,6 +1,4 @@
-package domain.model;
-
-import co.edu.uceva.inventariosibe.domain.model.TipoMovimiento;
+package co.edu.uceva.inventariosibe.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
