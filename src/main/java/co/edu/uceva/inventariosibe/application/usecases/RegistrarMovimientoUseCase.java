@@ -28,9 +28,7 @@ public class RegistrarMovimientoUseCase {
         }else {
             lote.registrarSalida(cantidad);
         }
-
         loteRepositoryPort.guardar(lote);
-
         //registrar el movimiento
         Movimiento movimiento = new Movimiento(UUID.randomUUID(), loteId, usuarioId, tipoMovimiento, cantidad, LocalDateTime.now(), descripcion);
         movimientoRepositoryPort.guardar(movimiento);
