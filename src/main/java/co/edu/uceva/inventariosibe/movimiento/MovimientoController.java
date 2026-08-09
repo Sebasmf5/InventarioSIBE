@@ -4,6 +4,7 @@ import co.edu.uceva.inventariosibe.movimiento.dto.MovimientoRequestDTO;
 import co.edu.uceva.inventariosibe.movimiento.dto.MovimientoResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,12 +27,14 @@ public class MovimientoController {
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     public MovimientoResponseDTO registrarMovimiento(@Valid @RequestBody MovimientoRequestDTO dto) {
         return movimientoService.registrarMovimiento(dto);
     }
 
     @GetMapping("/por-lote/{loteId}")
+    @PreAuthorize("isAuthenticated()")
     public List<MovimientoResponseDTO> listarPorLote(@PathVariable UUID loteId) {
         return movimientoService.listarPorLote(loteId);
     }

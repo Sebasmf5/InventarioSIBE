@@ -1,0 +1,11 @@
+# Copia este archivo a application-dev.yml y reemplazá con tus credenciales reales de Neon.
+# NO commitees application-dev.yml - está en .gitignore.
+spring:
+  datasource:
+    url: jdbc:postgresql://ep-XXXXX.aws-region.aws.neon.tech/inventariosibe?sslmode=require
+    username: TU_USER_NEON
+    password: TU_PASSWORD_NEON
+    driver-class-name: org.postgresql.Driver
+
+jwt:
+  secret: una-clave-aleatoria-de-mas-de-32-caracteres-que-te-inventas-aqui-1234567890

@@ -1,8 +1,10 @@
--- Requerido para que Postgres genere UUIDs automáticamente
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+-- pgcrypto no se necesita: Hibernate genera UUIDs cliente-side con
+-- @GeneratedValue(strategy = GenerationType.UUID). En Neon (Postgres 13+)
+-- gen_random_uuid() viene built-in en core; en H2 (tests) la extensión no existe.
+-- CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE "insumo" (
-                          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+                           "id" uuid PRIMARY KEY,
                           "nombre" varchar NOT NULL,
                           "presentacion" varchar NOT NULL,
                           "unidad_medida" varchar NOT NULL,
@@ -14,7 +16,7 @@ CREATE TABLE "insumo" (
 );
 
 CREATE TABLE "usuario" (
-                           "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+                           "id" uuid PRIMARY KEY,
                            "nombre" varchar NOT NULL,
                            "email" varchar UNIQUE NOT NULL,
                            "password_hash" varchar NOT NULL,
@@ -23,7 +25,7 @@ CREATE TABLE "usuario" (
 );
 
 CREATE TABLE "lote" (
-                        "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+                        "id" uuid PRIMARY KEY,
                         "insumo_id" uuid NOT NULL REFERENCES "insumo" ("id"),
                         "numero_lote" varchar NOT NULL,
                         "fecha_vencimiento" date NOT NULL,
@@ -34,7 +36,7 @@ CREATE TABLE "lote" (
 );
 
 CREATE TABLE "movimiento" (
-                              "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+                              "id" uuid PRIMARY KEY,
                               "lote_id" uuid NOT NULL REFERENCES "lote" ("id"),
                               "usuario_id" uuid NOT NULL REFERENCES "usuario" ("id"),
                               "tipo" varchar NOT NULL CHECK ("tipo" IN ('ENTRADA', 'SALIDA')),
@@ -44,7 +46,7 @@ CREATE TABLE "movimiento" (
 );
 
 CREATE TABLE "configuracion_semaforo" (
-                                          "id" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+                                          "id" uuid PRIMARY KEY,
                                           "dias_verde" int NOT NULL DEFAULT 90,
                                           "dias_amarillo" int NOT NULL DEFAULT 30,
                                           "dias_rojo" int NOT NULL DEFAULT 0
@@ -57,8 +59,8 @@ CREATE INDEX idx_movimiento_lote_id ON "movimiento" ("lote_id");
 CREATE INDEX idx_movimiento_usuario_id ON "movimiento" ("usuario_id");
 
 -- Fila inicial de configuración de semáforo (valores por defecto acordados)
-INSERT INTO "configuracion_semaforo" ("dias_verde", "dias_amarillo", "dias_rojo")
-VALUES (90, 30, 0);
+INSERT INTO "configuracion_semaforo" ("id", "dias_verde", "dias_amarillo", "dias_rojo")
+VALUES ('00000000-0000-0000-0000-000000000001', 90, 30, 0);
 
 COMMENT ON COLUMN "insumo"."tipo" IS 'MEDICAMENTO o INSUMO_MEDICO';
 COMMENT ON COLUMN "movimiento"."tipo" IS 'ENTRADA o SALIDA';
