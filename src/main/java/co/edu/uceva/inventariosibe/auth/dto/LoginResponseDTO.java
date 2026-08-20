@@ -2,8 +2,11 @@ package co.edu.uceva.inventariosibe.auth.dto;
 
 import co.edu.uceva.inventariosibe.usuario.Rol;
 
+import java.util.UUID;
+
 public class LoginResponseDTO {
 
+    private UUID id;
     private String token;
     private String email;
     private String nombre;
@@ -12,11 +15,20 @@ public class LoginResponseDTO {
     public LoginResponseDTO() {
     }
 
-    public LoginResponseDTO(String token, String email, String nombre, Rol rol) {
+    public LoginResponseDTO(UUID id, String token, String email, String nombre, Rol rol) {
+        this.id = id;
         this.token = token;
         this.email = email;
         this.nombre = nombre;
         this.rol = rol;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getToken() {

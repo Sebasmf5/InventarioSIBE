@@ -34,3 +34,5 @@ build/
 
 # Credenciales locales de Neon -
 src/main/resources/application-dev.yml
+# Exports de Figma para referencia de diseño (no se commitean)
+figma/
