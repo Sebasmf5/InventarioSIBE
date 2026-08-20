@@ -10,15 +10,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   const tbody = document.getElementById('tablaInsumos');
   let insumos = [];
-  let lotes = [];
 
-  const [respIns, respLot] = await Promise.all([
-    authFetch(API_BASE + '/insumos'),
-    authFetch(API_BASE + '/lotes')
-  ]);
+  const respIns = await authFetch(API_BASE + '/insumos');
   if (!respIns || !respIns.ok) { mostrarErrorGlobal('No se pudo cargar el inventario.'); return; }
   insumos = await respIns.json();
-  if (respLot && respLot.ok) lotes = await respLot.json();
 
   // Listener de filtros
   ['filtroNombre', 'filtroTipo', 'filtroEstado'].forEach(function (id) {
@@ -26,21 +21,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById(id).addEventListener('change', render);
   });
 
+  // El estado agregado del insumo (peor estado entre sus lotes) lo calcula
+  // el backend y llega en ins.estadoInsumo (enum EstadoSemaforo o null).
+  // Aquí solo decidimos las dos etiquetas que dependen de datos del propio
+  // insumo: "Inactivo" (si ins.activo === false) y "Sin lotes" (si el
+  // backend devolvió null porque el insumo no tiene lotes activos).
   function estadoInsumo(ins) {
-    const lotesIns = lotes.filter(function (l) { return l.insumoId === ins.id && l.activo !== false; });
-    if (!lotesIns.length) return { estado: 'Sin lotes', clase: 'badge-agotado' };
-    // Estado "peor" entre los lotes del insumo (Crítico > Por vencer > Vigente > Agotado)
-    let peor = { estado: 'Agotado', sev: 0 };
-    lotesIns.forEach(function (l) {
-      const s = calcularEstadoSemaforo(l);
-      const sev = severidadSemaforo(s.estado);
-      if (sev > peor.sev) peor = { estado: s.estado, sev: sev, clase: s.clase };
-    });
-    if (peor.sev === 0) peor = { estado: 'Agotado', clase: 'badge-agotado' };
-    else peor = { estado: peor.estado, clase: peor.clase || 'badge-agotado' };
-    // Si el insumo está inactivo, predomina inactive
     if (!ins.activo) return { estado: 'Inactivo', clase: 'badge-inactivo' };
-    return { estado: peor.estado, clase: peor.clase };
+    if (ins.estadoInsumo === null || ins.estadoInsumo === undefined) {
+      return { estado: 'Sin lotes', clase: 'badge-agotado' };
+    }
+    const mapeo = MAPA_ESTADO_SEMAFORO[ins.estadoInsumo] || MAPA_ESTADO_SEMAFORO.AGOTADO;
+    return { estado: mapeo.estado, clase: mapeo.clase };
   }
 
   function render() {

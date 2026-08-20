@@ -2,6 +2,7 @@ package co.edu.uceva.inventariosibe.insumo.dto;
 
 import co.edu.uceva.inventariosibe.insumo.Insumo;
 import co.edu.uceva.inventariosibe.insumo.TipoInsumo;
+import co.edu.uceva.inventariosibe.lote.EstadoSemaforo;
 
 import java.util.UUID;
 
@@ -16,11 +17,12 @@ public class InsumoResponseDTO {
     private String marca;
     private TipoInsumo tipo;
     private String registroInvima;
+    private EstadoSemaforo estadoInsumo;
 
     public InsumoResponseDTO() {
     }
 
-    public InsumoResponseDTO(Insumo insumo) {
+    public InsumoResponseDTO(Insumo insumo, EstadoSemaforo estadoInsumo) {
         this.id = insumo.getId();
         this.nombre = insumo.getNombre();
         this.presentacion = insumo.getPresentacion();
@@ -30,6 +32,7 @@ public class InsumoResponseDTO {
         this.marca = insumo.getMarca();
         this.tipo = insumo.getTipo();
         this.registroInvima = insumo.getRegistroInvima();
+        this.estadoInsumo = estadoInsumo;
     }
 
     public UUID getId() {
@@ -102,5 +105,13 @@ public class InsumoResponseDTO {
 
     public void setRegistroInvima(String registroInvima) {
         this.registroInvima = registroInvima;
+    }
+
+    public EstadoSemaforo getEstadoInsumo() {
+        return estadoInsumo;
+    }
+
+    public void setEstadoInsumo(EstadoSemaforo estadoInsumo) {
+        this.estadoInsumo = estadoInsumo;
     }
 }

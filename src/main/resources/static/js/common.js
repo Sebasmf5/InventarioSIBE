@@ -194,17 +194,6 @@ function calcularEstadoSemaforo(lote) {
   };
 }
 
-/* Comparador: severidad para elegir el "peor" estado de un insumo (Crítico > Por vencer > Vigente > Agotado) */
-function severidadSemaforo(estado) {
-  switch (estado) {
-    case 'Crítico':     return 3;
-    case 'Por vencer':  return 2;
-    case 'Vigente':     return 1;
-    case 'Agotado':     return 0;
-    default:            return -1;
-  }
-}
-
 function badgeSemaforoHtml(lote) {
   const s = calcularEstadoSemaforo(lote);
   let extra = '';
