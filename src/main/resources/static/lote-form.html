@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registrar lote · InventarioSIBE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="css/custom.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="app-layout">
+    <div id="navbar"></div>
+
+    <main class="app-main">
+      <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-7">
+        <div class="d-flex align-items-center mb-3">
+          <a href="dashboard" class="btn btn-link text-teal px-0 me-2"><i class="bi bi-arrow-left"></i> Volver</a>
+        </div>
+        <h2 class="card-title-section mb-1">Registrar lote</h2>
+        <p class="text-muted small mb-3">Al registrar un lote se genera automáticamente un movimiento de ENTRADA con la cantidad inicial.</p>
+
+        <div id="errorGlobal"></div>
+        <div id="formError"></div>
+
+        <div class="card app-card">
+          <div class="card-body">
+            <form id="loteForm" novalidate>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label" for="insumoId">Insumo *</label>
+                  <select id="insumoId" class="form-select" required>
+                    <option value="">Cargando insumos…</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="numeroLote">Número de lote *</label>
+                  <input type="text" id="numeroLote" class="form-control" required />
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="cantidadInicial">Cantidad inicial *</label>
+                  <input type="number" id="cantidadInicial" class="form-control" min="1" required />
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="fechaVencimiento">Vencimiento *</label>
+                  <input type="date" id="fechaVencimiento" class="form-control" required />
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="ubicacion">Ubicación *</label>
+                  <input type="text" id="ubicacion" class="form-control" required placeholder="ej. Estante A-3" />
+                </div>
+                <div class="col-12 col-md-6">
+                  <label class="form-label" for="observacion">Observación</label>
+                  <input type="text" id="observacion" class="form-control" placeholder="Opcional" />
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end gap-2 mt-4">
+                <a href="dashboard" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-teal" id="btnGuardar">
+                  <span id="spinner" class="spinner-border spinner-border-sm me-2 d-none"></span>
+                  Registrar lote
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/lote-form.js"></script>
+</body>
+</html>
