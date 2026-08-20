@@ -60,10 +60,20 @@ public class MovimientoService {
         );
     }
 
+
     @Transactional(readOnly = true)
     public List<MovimientoResponseDTO> listarPorLote(UUID loteId) {
         return movimientoRepository.findByLoteId(loteId).stream()
                 .map(MovimientoResponseDTO::new)
                 .toList();
     }
+
+    @Transactional
+    public List<MovimientoResponseDTO> listarMovimientosPorUsuario(UUID usuarioId) {
+        return movimientoRepository.findByUsuarioId(usuarioId).stream()
+                .map(MovimientoResponseDTO::new)
+                .toList();
+    }
+
+
 }

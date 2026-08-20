@@ -38,4 +38,11 @@ public class MovimientoController {
     public List<MovimientoResponseDTO> listarPorLote(@PathVariable UUID loteId) {
         return movimientoService.listarPorLote(loteId);
     }
+
+    @GetMapping("/por-usuario/{usuarioId}")
+    @PreAuthorize("isAuthenticated()")
+    public List<MovimientoResponseDTO> listarPorUsuario(@PathVariable UUID usuarioId) {
+        return movimientoService.listarMovimientosPorUsuario(usuarioId);
+    }
+
 }
