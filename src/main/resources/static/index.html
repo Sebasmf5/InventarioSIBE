@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>InventarioSIBE</title>
+  <script>
+    // Redirección inicial: si hay sesión → dashboard, si no → login
+    if (localStorage.getItem('inv_token') && localStorage.getItem('inv_usuario')) {
+      window.location.replace('dashboard');
+    } else {
+      window.location.replace('login');
+    }
+  </script>
+</head>
+<body></body>
+</html>
