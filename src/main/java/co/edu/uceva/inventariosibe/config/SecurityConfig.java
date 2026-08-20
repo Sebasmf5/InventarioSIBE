@@ -31,6 +31,18 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(
+                                "/", "/index.html", "/login", "/login.html",
+                                "/dashboard", "/dashboard.html",
+                                "/inventario", "/inventario.html",
+                                "/insumo-form", "/insumo-form.html",
+                                "/lote-form", "/lote-form.html",
+                                "/lotes", "/lotes.html",
+                                "/movimiento-wizard", "/movimiento-wizard.html",
+                                "/usuarios", "/usuarios.html",
+                                "/css/**", "/js/**", "/img/**",
+                                "/favicon.ico", "/error"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

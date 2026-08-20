@@ -40,6 +40,9 @@ public class Lote {
     @Column(name = "ubicacion", nullable = false)
     private String ubicacion;
 
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
+
     protected Lote() {
     }
 
@@ -151,5 +154,13 @@ public class Lote {
 
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

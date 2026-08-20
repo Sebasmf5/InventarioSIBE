@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -49,5 +51,12 @@ public class LoteController {
     @PreAuthorize("isAuthenticated()")
     public List<LoteResponseDTO> listarPorInsumo(@PathVariable UUID insumoId) {
         return loteService.listarPorInsumo(insumoId);
+    }
+
+    @PatchMapping("/{id}/activo")
+    @PreAuthorize("isAuthenticated()")
+    public LoteResponseDTO cambiarEstado(@PathVariable UUID id, @RequestBody Map<String, Boolean> body) {
+        boolean activo = body.getOrDefault("activo", true);
+        return loteService.cambiarEstadoLote(id, activo);
     }
 }

@@ -1,5 +1,6 @@
 package co.edu.uceva.inventariosibe.lote.dto;
 
+import co.edu.uceva.inventariosibe.lote.EstadoSemaforo;
 import co.edu.uceva.inventariosibe.lote.Lote;
 
 import java.time.LocalDate;
@@ -15,11 +16,14 @@ public class LoteResponseDTO {
     private int cantidadActual;
     private LocalDate fechaIngreso;
     private String ubicacion;
+    private boolean activo;
+    private EstadoSemaforo estado;
+    private Long diasRestantes;
 
     public LoteResponseDTO() {
     }
 
-    public LoteResponseDTO(Lote lote) {
+    public LoteResponseDTO(Lote lote, EstadoSemaforo estado, Long diasRestantes) {
         this.id = lote.getId();
         this.insumoId = lote.getInsumoId();
         this.numeroLote = lote.getNumeroLote();
@@ -28,6 +32,9 @@ public class LoteResponseDTO {
         this.cantidadActual = lote.getCantidadActual();
         this.fechaIngreso = lote.getFechaIngreso();
         this.ubicacion = lote.getUbicacion();
+        this.activo = lote.isActivo();
+        this.estado = estado;
+        this.diasRestantes = diasRestantes;
     }
 
     public UUID getId() {
@@ -92,5 +99,29 @@ public class LoteResponseDTO {
 
     public void setUbicacion(String ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public EstadoSemaforo getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoSemaforo estado) {
+        this.estado = estado;
+    }
+
+    public Long getDiasRestantes() {
+        return diasRestantes;
+    }
+
+    public void setDiasRestantes(Long diasRestantes) {
+        this.diasRestantes = diasRestantes;
     }
 }
