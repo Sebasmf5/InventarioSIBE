@@ -43,6 +43,8 @@ public class Lote {
     @Column(name = "activo", nullable = false)
     private boolean activo = true;
 
+
+
     protected Lote() {
     }
 
