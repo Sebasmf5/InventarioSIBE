@@ -18,6 +18,7 @@ public class InsumoResponseDTO {
     private TipoInsumo tipo;
     private String registroInvima;
     private EstadoSemaforo estadoInsumo;
+    private int unidadesPorCaja;
 
     public InsumoResponseDTO() {
     }
@@ -33,6 +34,7 @@ public class InsumoResponseDTO {
         this.tipo = insumo.getTipo();
         this.registroInvima = insumo.getRegistroInvima();
         this.estadoInsumo = estadoInsumo;
+        this.unidadesPorCaja = insumo.getUnidadesPorCaja();
     }
 
     public UUID getId() {
@@ -113,5 +115,13 @@ public class InsumoResponseDTO {
 
     public void setEstadoInsumo(EstadoSemaforo estadoInsumo) {
         this.estadoInsumo = estadoInsumo;
+    }
+
+    public int getUnidadesPorCaja() {
+        return unidadesPorCaja;
+    }
+
+    public void setUnidadesPorCaja(int unidadesPorCaja) {
+        this.unidadesPorCaja = unidadesPorCaja;
     }
 }

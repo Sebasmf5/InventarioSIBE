@@ -106,7 +106,18 @@ public class LoteService {
         Long diasRestantes = estado == EstadoSemaforo.AGOTADO
                 ? null
                 : ChronoUnit.DAYS.between(hoy, lote.getFechaVencimiento());
-        return new LoteResponseDTO(lote, estado, diasRestantes);
+
+        int unidadesPorCaja = insumoRepository.findById(lote.getInsumoId())
+                .map(Insumo::getUnidadesPorCaja)
+                .orElse(1);
+
+        LoteResponseDTO dto = new LoteResponseDTO(lote, estado, diasRestantes);
+        dto.setUnidadesPorCaja(unidadesPorCaja);
+        Lote.CajasUnidades cyu = lote.calcularCajasDisponibles(unidadesPorCaja);
+        dto.setCajas(cyu.cajas());
+        dto.setUnidadesSueltas(cyu.unidadesSueltas());
+        dto.setStockFormateado(cyu.cajas() + " cajas y " + cyu.unidadesSueltas() + " unidades");
+        return dto;
     }
 
     private Lote buscarEntidadPorId(UUID id) {

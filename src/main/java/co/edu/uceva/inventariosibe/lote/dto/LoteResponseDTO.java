@@ -19,6 +19,10 @@ public class LoteResponseDTO {
     private boolean activo;
     private EstadoSemaforo estado;
     private Long diasRestantes;
+    private int unidadesPorCaja;
+    private int cajas;
+    private int unidadesSueltas;
+    private String stockFormateado;
 
     public LoteResponseDTO() {
     }
@@ -123,5 +127,37 @@ public class LoteResponseDTO {
 
     public void setDiasRestantes(Long diasRestantes) {
         this.diasRestantes = diasRestantes;
+    }
+
+    public int getUnidadesPorCaja() {
+        return unidadesPorCaja;
+    }
+
+    public void setUnidadesPorCaja(int unidadesPorCaja) {
+        this.unidadesPorCaja = unidadesPorCaja;
+    }
+
+    public int getCajas() {
+        return cajas;
+    }
+
+    public void setCajas(int cajas) {
+        this.cajas = cajas;
+    }
+
+    public int getUnidadesSueltas() {
+        return unidadesSueltas;
+    }
+
+    public void setUnidadesSueltas(int unidadesSueltas) {
+        this.unidadesSueltas = unidadesSueltas;
+    }
+
+    public String getStockFormateado() {
+        return stockFormateado;
+    }
+
+    public void setStockFormateado(String stockFormateado) {
+        this.stockFormateado = stockFormateado;
     }
 }

@@ -41,7 +41,8 @@ public class InsumoService {
                 dto.getActivo(),
                 dto.getMarca(),
                 dto.getTipo(),
-                dto.getRegistroInvima()
+                dto.getRegistroInvima(),
+                dto.getUnidadesPorCaja()
         );
         return aResponse(insumoRepository.save(insumo));
     }
@@ -69,6 +70,7 @@ public class InsumoService {
         insumo.setMarca(dto.getMarca());
         insumo.setTipo(dto.getTipo());
         insumo.setRegistroInvima(dto.getRegistroInvima());
+        insumo.setUnidadesPorCaja(dto.getUnidadesPorCaja());
         return aResponse(insumoRepository.save(insumo));
     }
 

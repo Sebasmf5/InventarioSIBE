@@ -35,7 +35,7 @@ class LoteServiceTest {
 
         UUID insumoId = UUID.randomUUID();
         Insumo insumo = new Insumo(insumoId, "Acetaminofén", "Tableta",
-                "100mg", 50, true, "Genfar", TipoInsumo.MEDICAMENTO, "INVIMA-123");
+                "100mg", 50, true, "Genfar", TipoInsumo.MEDICAMENTO, "INVIMA-123", 10);
         when(insumoRepository.findById(insumoId)).thenReturn(Optional.of(insumo));
         when(loteRepository.save(any(Lote.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -82,5 +82,34 @@ class LoteServiceTest {
 
         assertThrows(NoSuchElementException.class, () -> service.registrarLote(dto));
         verify(loteRepository, never()).save(any());
+    }
+
+    @Test
+    void ContadorDeCajasYUnidades() {
+        LoteRepository loteRepository = mock(LoteRepository.class);
+        InsumoRepository insumoRepository = mock(InsumoRepository.class);
+        MovimientoRepository movimientoRepository = mock(MovimientoRepository.class);
+        ConfiguracionSemaforoRepository configuracionSemaforoRepository = mock(ConfiguracionSemaforoRepository.class);
+        when(configuracionSemaforoRepository.findAll()).thenReturn(List.of(configuracionPorDefecto()));
+
+        UUID insumoId = UUID.randomUUID();
+        Insumo insumo = new Insumo(insumoId, "Acetaminofén", "Tableta",
+                "100mg", 50, true, "Genfar", TipoInsumo.MEDICAMENTO, "INVIMA-123", 10);
+        when(insumoRepository.findById(insumoId)).thenReturn(Optional.of(insumo));
+        when(loteRepository.save(any(Lote.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        RegistrarLoteRequestDTO dto = new RegistrarLoteRequestDTO();
+        dto.setInsumoId(insumoId);
+        dto.setUsuarioId(UUID.randomUUID());
+        dto.setNumeroLote("L-001");
+        dto.setFechaVencimiento(LocalDate.now().plusDays(120));
+        dto.setCantidadInicial(100);
+        dto.setObservacion("Ingreso inicial");
+        dto.setUbicacion("Armario Gris");
+
+        LoteService service = new LoteService(loteRepository, insumoRepository, movimientoRepository, configuracionSemaforoRepository);
+
+
+
     }
 }

@@ -15,6 +15,14 @@ import java.util.UUID;
 @Table(name = "lote")
 public class Lote {
 
+    /**
+     * Resultado inmutable de descomponer un stock en cajas + unidades sueltas.
+     * Un record es una clase ligera que solo guarda datos: Java genera
+     * automáticamente el constructor, los accessors cajas()/unidadesSueltas(),
+     * equals(), hashCode() y toString().
+     */
+    public record CajasUnidades(int cajas, int unidadesSueltas) {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -29,7 +37,7 @@ public class Lote {
     private LocalDate fechaVencimiento;
 
     @Column(name = "cantidad_inicial", nullable = false)
-    private int cantidadInicial;
+    private int cantidadInicial; // total de unidades (se calcula con el total de cajas * las unidades por caja)
 
     @Column(name = "cantidad_actual", nullable = false)
     private int cantidadActual;
@@ -42,8 +50,6 @@ public class Lote {
 
     @Column(name = "activo", nullable = false)
     private boolean activo = true;
-
-
 
     protected Lote() {
     }
@@ -62,6 +68,22 @@ public class Lote {
         this.cantidadActual = cantidadActual;
         this.fechaIngreso = fechaIngreso;
         this.ubicacion = ubicacion;
+    }
+
+    /**
+     * Descompone el stock actual del lote en cajas cerradas + unidades sueltas,
+     * usando el factor de conversión del insumo (1 caja = N unidades).
+     *
+     * Ej: 53 unidades con factor 10 → 5 cajas y 3 unidades sueltas.
+     *
+     * @param unidadesPorCaja factor del insumo (cuántas unidades tiene una caja)
+     * @return un CajasUnidades(cajas, unidadesSueltas) listo para leer por nombre
+     */
+    public CajasUnidades calcularCajasDisponibles(int unidadesPorCaja) {
+        return new CajasUnidades(
+                cantidadActual / unidadesPorCaja,
+                cantidadActual % unidadesPorCaja
+        );
     }
 
     public EstadoSemaforo calcularEstadoSemaforo(ConfiguracionSemaforo conf, LocalDate hoy) {

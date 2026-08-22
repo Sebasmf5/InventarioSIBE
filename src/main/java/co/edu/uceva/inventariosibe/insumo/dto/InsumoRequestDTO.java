@@ -3,6 +3,7 @@ package co.edu.uceva.inventariosibe.insumo.dto;
 import co.edu.uceva.inventariosibe.insumo.TipoInsumo;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public class InsumoRequestDTO {
@@ -27,6 +28,17 @@ public class InsumoRequestDTO {
 
     @NotNull
     private TipoInsumo tipo;
+
+    @Positive
+    private int unidadesPorCaja;
+
+    public int getUnidadesPorCaja() {
+        return unidadesPorCaja;
+    }
+
+    public void setUnidadesPorCaja(int unidadesPorCaja) {
+        this.unidadesPorCaja = unidadesPorCaja;
+    }
 
     private String registroInvima;
 

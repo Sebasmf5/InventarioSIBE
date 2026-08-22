@@ -44,12 +44,16 @@ public class Insumo {
     @Column(name = "registro_invima")
     private String registroInvima;
 
+    @Column(name = "unidades_por_caja", nullable = false)
+    private int unidadesPorCaja = 1;
+
     protected Insumo() {
     }
 
     public Insumo(UUID id, String nombre, String presentacion,
                   String unidadMedida, int stockMinimo, boolean activo,
-                  String marca, TipoInsumo tipo, String registroInvima) {
+                  String marca, TipoInsumo tipo, String registroInvima,
+                  int unidadesPorCaja) {
         this.id = id;
         this.nombre = nombre;
         this.presentacion = presentacion;
@@ -59,6 +63,15 @@ public class Insumo {
         this.marca = marca;
         this.tipo = tipo;
         this.registroInvima = registroInvima;
+        this.unidadesPorCaja = unidadesPorCaja;
+    }
+
+    public int getUnidadesPorCaja() {
+        return unidadesPorCaja;
+    }
+
+    public void setUnidadesPorCaja(int unidadesPorCaja) {
+        this.unidadesPorCaja = unidadesPorCaja;
     }
 
     public void validarPuedeRecibirLote() {
