@@ -27,6 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
         forward(registry, "/insumo-form", "forward:/insumo-form.html");
         forward(registry, "/lote-form", "forward:/lote-form.html");
         forward(registry, "/lotes", "forward:/lotes.html");
+        forward(registry, "/movimientos", "forward:/movimientos.html");
         forward(registry, "/movimiento-wizard", "forward:/movimiento-wizard.html");
         forward(registry, "/usuarios", "forward:/usuarios.html");
     }

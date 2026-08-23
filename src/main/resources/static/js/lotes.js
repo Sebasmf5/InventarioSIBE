@@ -72,6 +72,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         ? '<button class="btn btn-sm btn-outline-teal" data-id="' + l.id + '" data-activar="true" title="Habilitar lote"><i class="bi bi-unlock"></i></button>'
         : '<button class="btn btn-sm btn-outline-danger" data-id="' + l.id + '" data-activar="false" title="Deshabilitar lote"><i class="bi bi-lock"></i></button>';
 
+      const verMovBtn = '<a class="btn btn-sm btn-outline-secondary me-1" href="movimientos?loteId=' + l.id + '" title="Ver movimientos"><i class="bi bi-clock-history"></i></a>';
+
       return '<tr>' +
         '<td><strong>' + escapeHtml(nombreInsumo[l.insumoId] || 'Insumo eliminado') + '</strong></td>' +
         '<td>' + escapeHtml(l.numeroLote) + '</td>' +
@@ -82,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         '<td>' + escapeHtml(l.ubicacion || '–') + '</td>' +
         '<td>' + badgeSemaforoHtml(l) + '</td>' +
         '<td>' + activoBadge + '</td>' +
-        '<td class="text-end">' + toggleBtn + '</td>' +
+        '<td class="text-end text-nowrap">' + verMovBtn + toggleBtn + '</td>' +
         '</tr>';
     }).join('');
 

@@ -33,6 +33,12 @@ public class MovimientoController {
         return movimientoService.registrarMovimiento(dto);
     }
 
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    public List<MovimientoResponseDTO> listarTodos() {
+        return movimientoService.listarTodos();
+    }
+
     @GetMapping("/por-lote/{loteId}")
     @PreAuthorize("isAuthenticated()")
     public List<MovimientoResponseDTO> listarPorLote(@PathVariable UUID loteId) {

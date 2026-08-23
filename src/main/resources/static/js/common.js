@@ -131,6 +131,7 @@ function renderNavbar(usuario) {
     { href: 'dashboard',          label: 'Dashboard',          icon: 'bi-speedometer2' },
     { href: 'inventario',         label: 'Inventario',          icon: 'bi-boxes' },
     { href: 'lotes',              label: 'Lotes',               icon: 'bi-layers' },
+    { href: 'movimientos',        label: 'Movimientos',          icon: 'bi-clock-history' },
     { href: 'lote-form',          label: 'Registrar lote',       icon: 'bi-plus-circle' },
     { href: 'movimiento-wizard',  label: 'Registrar movimiento', icon: 'bi-arrow-left-right' }
   ];

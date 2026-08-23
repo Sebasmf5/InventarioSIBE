@@ -38,6 +38,7 @@ public class SecurityConfig {
                                 "/insumo-form", "/insumo-form.html",
                                 "/lote-form", "/lote-form.html",
                                 "/lotes", "/lotes.html",
+                                "/movimientos", "/movimientos.html",
                                 "/movimiento-wizard", "/movimiento-wizard.html",
                                 "/usuarios", "/usuarios.html",
                                 "/css/**", "/js/**", "/img/**",
