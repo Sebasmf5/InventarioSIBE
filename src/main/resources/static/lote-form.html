@@ -39,9 +39,17 @@
                   <label class="form-label" for="numeroLote">Número de lote *</label>
                   <input type="text" id="numeroLote" class="form-control" required />
                 </div>
+                <div class="col-12">
+                  <small class="text-muted" id="factorInfo"></small>
+                </div>
                 <div class="col-6 col-md-3">
-                  <label class="form-label" for="cantidadInicial">Cantidad inicial *</label>
-                  <input type="number" id="cantidadInicial" class="form-control" min="1" required />
+                  <label class="form-label" for="cajas">Cajas que ingresaron *</label>
+                  <input type="number" id="cajas" class="form-control" min="0" value="0" required />
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="unidadesSueltas">Unidades sueltas</label>
+                  <input type="number" id="unidadesSueltas" class="form-control" min="0" value="0" />
+                  <div class="form-text" id="totalInfo"></div>
                 </div>
                 <div class="col-6 col-md-3">
                   <label class="form-label" for="fechaVencimiento">Vencimiento *</label>

@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('tipo').value = ins.tipo || 'MEDICAMENTO';
     document.getElementById('registroInvima').value = ins.registroInvima || '';
     document.getElementById('activo').checked = !!ins.activo;
+    document.getElementById('unidadesPorCaja').value = ins.unidadesPorCaja || 1;
   }
 
   form.addEventListener('submit', async function (e) {
@@ -44,7 +45,8 @@ document.addEventListener('DOMContentLoaded', async function () {
       activo: document.getElementById('activo').checked,
       marca: document.getElementById('marca').value.trim(),
       tipo: document.getElementById('tipo').value,
-      registroInvima: document.getElementById('registroInvima').value.trim() || null
+      registroInvima: document.getElementById('registroInvima').value.trim() || null,
+      unidadesPorCaja: parseInt(document.getElementById('unidadesPorCaja').value, 10) || 1
     };
 
     btn.disabled = true;

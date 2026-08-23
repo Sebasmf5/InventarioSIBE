@@ -66,7 +66,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     const resp = await authFetch(API_BASE + '/lotes/por-insumo/' + insumoSeleccionado.id);
     if (!resp || !resp.ok) { listaLotes.innerHTML = '<div class="text-center text-muted py-4">No se pudieron cargar los lotes.</div>'; return; }
     const lotes = await resp.json();
-    const disponibles = lotes.filter(function (l) { return l.cantidadActual > 0 && l.activo !== false; });
+    const disponibles = lotes.filter(function (l) {
+      return l.cantidadActual > 0 && l.activo !== false; }
+    ).sort(function (a, b){
+      var da = a.diasRestantes === null ? Infinity : a.diasRestantes;
+      var db = a.diasRestantes === null ? Infinity : b.diasRestantes;
+      return da - db;
+    });
+
     if (!disponibles.length) {
       listaLotes.innerHTML = '<div class="text-center text-muted py-4">Este insumo no tiene lotes con stock disponible. Registre un lote primero.</div>';
       return;
@@ -75,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       return '<button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" data-id="' + l.id + '">' +
         '<div>' +
           '<div><strong>Lote ' + escapeHtml(l.numeroLote) + '</strong> · vence ' + formatFecha(l.fechaVencimiento) + '</div>' +
-          '<div class="small text-muted">Stock actual: ' + l.cantidadActual + ' · ' + escapeHtml(l.ubicacion || '–') + '</div>' +
+          '<div class="small text-muted">Stock: ' + escapeHtml(l.stockFormateado || (l.cantidadActual + ' u')) + ' · ' + escapeHtml(l.ubicacion || '–') + '</div>' +
         '</div>' +
         '<span class="text-nowrap ms-2">' + badgeSemaforoHtml(l) + '</span>' +
       '</button>';
@@ -115,21 +122,25 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     document.getElementById('loteSeleccionado').innerHTML =
       '<div><strong>Lote:</strong> ' + escapeHtml(loteSeleccionado.numeroLote) + '</div>' +
-      '<div class="small">Vence ' + formatFecha(loteSeleccionado.fechaVencimiento) + ' · Stock actual: ' + loteSeleccionado.cantidadActual + '</div>' +
+      '<div class="small">Vence ' + formatFecha(loteSeleccionado.fechaVencimiento) + ' · Stock: ' +
+      escapeHtml(loteSeleccionado.stockFormateado || (loteSeleccionado.cantidadActual + ' u')) + '</div>' +
       '<div class="mt-1">' + badgeSemaforoHtml(loteSeleccionado) + '</div>';
 
     actualizarLimitesCantidad();
   }
 
   function actualizarLimitesCantidad() {
+    var stockTxt = loteSeleccionado
+      ? (loteSeleccionado.stockFormateado || (loteSeleccionado.cantidadActual + ' u'))
+      : '';
     if (tipoMov.value === 'SALIDA') {
       const max = loteSeleccionado ? loteSeleccionado.cantidadActual : 0;
       cantidad.setAttribute('max', String(max));
       cantidad.value = Math.min(parseInt(cantidad.value, 10) || 1, max);
-      hint.textContent = 'Máximo disponible: ' + max;
+      hint.textContent = 'Stock disponible: ' + stockTxt + ' (' + max + ' u). Máximo: ' + max + ' u.';
     } else {
       cantidad.removeAttribute('max');
-      hint.textContent = 'La entrada aumenta el stock del lote.';
+      hint.textContent = 'Stock actual: ' + stockTxt + '. La entrada aumenta el stock en unidades.';
     }
   }
   tipoMov.addEventListener('change', actualizarLimitesCantidad);

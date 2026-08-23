@@ -48,8 +48,13 @@
                   <input type="text" id="unidadMedida" class="form-control" required placeholder="ej. ml, mg, uds" />
                 </div>
                 <div class="col-6 col-md-3">
-                  <label class="form-label" for="stockMinimo">Stock mínimo *</label>
+                  <label class="form-label" for="stockMinimo">Stock mínimo (u) *</label>
                   <input type="number" id="stockMinimo" class="form-control" min="0" value="0" required />
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label" for="unidadesPorCaja">Unidades por caja *</label>
+                  <input type="number" id="unidadesPorCaja" class="form-control" min="1" value="1" required />
+                  <div class="form-text">Factor: 1 caja = N unidades.</div>
                 </div>
                 <div class="col-12 col-md-6">
                   <label class="form-label" for="marca">Marca *</label>

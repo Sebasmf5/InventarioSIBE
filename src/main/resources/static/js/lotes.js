@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         '<td>' + escapeHtml(l.numeroLote) + '</td>' +
         '<td>' + formatFecha(l.fechaVencimiento) + '</td>' +
         '<td class="fw-semibold">' + escapeHtml(diasTxt) + '</td>' +
-        '<td>' + l.cantidadInicial + '</td>' +
-        '<td>' + l.cantidadActual + '</td>' +
+        '<td>' + escapeHtml(l.stockFormateado || (l.cantidadInicial + ' u')) + '</td>' +
+        '<td>' + escapeHtml(l.stockFormateado || (l.cantidadActual + ' u')) + '</td>' +
         '<td>' + escapeHtml(l.ubicacion || '–') + '</td>' +
         '<td>' + badgeSemaforoHtml(l) + '</td>' +
         '<td>' + activoBadge + '</td>' +
